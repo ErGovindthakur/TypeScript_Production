@@ -293,6 +293,113 @@ temporaryData = true;    // Allowed
 
 To keep your codebase clean and readable, use this standard industry rule of thumb:
 
+# Chapter 4: Union Types and Type Aliases
+
+This guide covers how to allow multiple types for a single variable using **Union Types**, and how to create clean, reusable custom types using **Type Aliases**.
+
+---
+
+## 🔀 1. Union Types
+
+A **Union Type** allows a variable to hold more than one specific type of value. It acts as an OR operator (`|`) for types.
+
+### The Problem
+Sometimes a value can naturally be a string or a number. For example, an ID might be numeric from a database (`1024`) or a string uuid (`"usr_abcd123"`).
+
+### Code Example
+
+```typescript
+// Declaring a variable that can be a string OR a number
+let userId: string | number;
+
+userId = 1024;           // ✅ Valid
+userId = "usr_abcd123";  // ✅ Valid
+userId = true;           // ❌ Compile Error: Type 'boolean' is not assignable to type 'string | number'.
+
+// Using Union Types in functions
+function printId(id: string | number) {
+  console.log(`Your ID is: ${id}`);
+}
+
+printId(456);     // ✅ Valid
+printId("789");   // ✅ Valid
+```
+
+---
+
+## 🏷️ 2. Type Aliases
+
+A **Type Alias** is a custom name you create for an existing type structure. It uses the `type` keyword. Think of it as creating a reusable variable shortcut for your types so you do not have to write them out repeatedly.
+
+### Code Example
+
+```typescript
+// 1. Define custom Type Aliases
+type ID = string | number; // Aliasing a union type
+
+type UserProfile = {       // Aliasing an object structure
+  id: ID;                  // Reusing our ID alias inside this type!
+  username: string;
+  accountType: "Admin" | "Standard"; // Narrowing down to specific exact strings
+};
+
+// 2. Apply your custom Type Aliases to data
+const adminUser: UserProfile = {
+  id: "adm-99",
+  username: "super_dev",
+  accountType: "Admin"
+};
+
+const standardUser: UserProfile = {
+  id: 404,
+  username: "john_doe",
+  accountType: "Standard"
+};
+```
+
+---
+
+## 🏗️ A Complete, Easy-to-Understand Production Example
+
+Here is a practical, realistic scenario: processing payments. A payment can be done via **Card** or **UPI**, and the system needs to handle both forms of data safely.
+
+```typescript
+// Step 1: Define explicit type aliases for payment types
+type CardPayment = {
+  cardNumber: string;
+  expiryDate: string;
+};
+
+type UpiPayment = {
+  upiId: string;
+};
+
+// Step 2: Use a Union Type to represent the transaction method
+type PaymentMethod = CardPayment | UpiPayment;
+
+// Step 3: Create a clean process function using these aliases
+function processOrderPayment(amount: number, method: PaymentMethod) {
+  console.log(`Processing an order payment of $${amount}...`);
+  
+  // Checking which properties exist in the union structure safely
+  if ("upiId" in method) {
+    // TypeScript knows 'method' must be UpiPayment inside this block
+    console.log(`Sending ping to UPI gateway: ${method.upiId}`);
+  } else {
+    // TypeScript knows 'method' must be CardPayment inside this block
+    console.log(`Charging Credit Card ending in: ${method.cardNumber.slice(-4)}`);
+  }
+}
+
+// Step 4: Run the code with different input options
+const customerCard: CardPayment = { cardNumber: "1234567812345678", expiryDate: "12/28" };
+const customerUpi: UpiPayment = { upiId: "alex@okaxis" };
+
+processOrderPayment(50, customerCard); // ✅ Handled seamlessly
+processOrderPayment(25, customerUpi);  // ✅ Handled seamlessly
+```
+
+
 * **Rely on Inference:** For simple variable assignments where the value is declared right next to the variable name (e.g., `const userAge = 30;`). Writing out the type here is redundant.
 * **Use Explicit Annotations:** 
   1. When declaring a variable now but assigning its value later (e.g., inside a conditional block or an asynchronous fetch loop).
