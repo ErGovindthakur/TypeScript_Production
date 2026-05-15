@@ -1,0 +1,19 @@
+{
+  "name": "06_typescriptprojectsetup",
+  "version": "1.0.0",
+  "description": "Setting up typescript project",
+  "main": "index.js",
+  "scripts": {
+    "start":"node dist/index.js",
+    "dev":"npx tsc"
+  },
+  "keywords": [
+    "Typescript",
+    "Tsc"
+  ],
+  "author": "Er Govind Thakur",
+  "license": "ISC",
+  "devDependencies": {
+    "typescript": "^6.0.3"
+  }
+}
