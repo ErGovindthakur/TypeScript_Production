@@ -200,3 +200,101 @@ To execute your code cleanly, open your `package.json` file and locate the `"scr
   npm run start
   ```
 
+# Chapter 3: Primitive Types, Type Annotations, and Type Inference
+
+This guide explains how TypeScript handles basic data types, how to explicitly assign types, and how the compiler automatically detects types when you do not provide them.
+
+---
+
+## 💎 1. Core Primitive Types
+
+TypeScript relies on the same core primitive types as JavaScript. The three most common are:
+
+* **`string`**: Represents text data. Enclosed in double quotes (`""`), single quotes (`''`), or template literals (backticks `` ``).
+* **`number`**: Represents all numeric values. This includes integers, floating-point numbers, decimals, and special values like `NaN` or `Infinity`.
+* **`boolean`**: Represents a structural flag. It has only two possible values: `true` or `false`.
+
+> ⚠️ **Important Note:** Always use lowercase names (`string`, `number`, `boolean`) for typing. Capitalized versions (`String`, `Number`, `Boolean`) refer to special JavaScript wrapper objects and should not be used as types.
+
+---
+
+## ✍️ 2. Type Annotations
+
+A **Type Annotation** is an explicit instruction you write to tell TypeScript exactly what type a variable, function parameter, or function return value must be.
+
+### Syntax
+You add a colon (`:`) followed by the type name directly after declaring an identifier.
+
+### Code Examples
+
+```typescript
+// Explicitly typing primitive variables
+const developerName: string = "Alice";
+let projectsCompleted: number = 14;
+const isSenior: boolean = true;
+
+// Explicitly typing function parameters and return values
+function formatUserStatus(name: string, total: number, active: boolean): string {
+  return `User ${name} has managed ${total} projects. Active status: ${active}`;
+}
+
+// Executing the typed function safely
+const statusMessage: string = formatUserStatus(developerName, projectsCompleted, isSenior);
+console.log(statusMessage);
+```
+
+### What Happens on Mismatches?
+If you try to assign a value that violates the annotation, the compiler halts the build instantly.
+```typescript
+let age: number = 25;
+age = "twenty-five"; // ❌ Compile Error: Type 'string' is not assignable to type 'number'.
+```
+
+---
+
+## 🧠 3. Type Inference
+
+You do not always have to type out annotations. TypeScript features an advanced automation mechanism called **Type Inference**. 
+
+If you initialize a variable with a value on the same line, the compiler looks at that value and automatically assigns its type behind the scenes.
+
+### Code Examples
+
+```typescript
+// You write this:
+let dynamicMessage = "Session in progress"; 
+let totalCost = 99.99;
+let isComplete = false;
+
+// TypeScript sees and enforces this under the hood:
+// let dynamicMessage: string = "Session in progress";
+// let totalCost: number = 99.99;
+// let isComplete: boolean = false;
+
+// Testing the inference restriction:
+totalCost = "Free"; // ❌ Compile Error: Type 'string' is not assignable to type 'number'.
+```
+
+### The `any` Danger (Implicit Any)
+Inference only works if you provide an initial value. If you declare a variable without a value and without an annotation, TypeScript cannot guess the type. It assigns a fallback type called `any`.
+
+```typescript
+let temporaryData; // inferred as type: any (This turns off type-checking!)
+
+temporaryData = "Hello"; // Allowed
+temporaryData = 42;      // Allowed
+temporaryData = true;    // Allowed
+```
+* **Best Practice:** Avoid leaving declarations un-annotated if you aren't initializing them immediately. This ensures you maintain full type safety.
+
+---
+
+## ⚖️ When to Use Explicit Annotations vs. Relying on Inference
+
+To keep your codebase clean and readable, use this standard industry rule of thumb:
+
+* **Rely on Inference:** For simple variable assignments where the value is declared right next to the variable name (e.g., `const userAge = 30;`). Writing out the type here is redundant.
+* **Use Explicit Annotations:** 
+  1. When declaring a variable now but assigning its value later (e.g., inside a conditional block or an asynchronous fetch loop).
+  2. On all function parameters (TypeScript will not infer parameter types because it cannot predict what arguments will be passed to the function later).
+  3. On complex function return types to act as a clear structural design document.
