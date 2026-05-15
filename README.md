@@ -405,3 +405,102 @@ processOrderPayment(25, customerUpi);  // ✅ Handled seamlessly
   1. When declaring a variable now but assigning its value later (e.g., inside a conditional block or an asynchronous fetch loop).
   2. On all function parameters (TypeScript will not infer parameter types because it cannot predict what arguments will be passed to the function later).
   3. On complex function return types to act as a clear structural design document.
+
+# Chapter 5: Structural Arrays and Tuples
+
+This guide covers how to work with ordered collections in TypeScript. You will learn how to typed standard collections using **Arrays** and fixed-length records using **Tuples**.
+
+---
+
+## 📚 1. Structural Arrays
+
+In JavaScript, arrays can hold any data type simultaneously. TypeScript forces arrays to be uniform, ensuring every element inside the collection matches a specific data type.
+
+### Syntax Options
+There are two identical ways to declare arrays in TypeScript:
+1. `type[]` (Most common syntax)
+2. `Array<type>` (Generic syntax)
+
+### Code Example
+
+```typescript
+// Explicitly typed arrays (using both syntax options)
+const userNames: string[] = ["Alice", "Bob", "Charlie"];
+const systemScores: Array<number> = [95, 82, 88, 100];
+
+// Type Inference working on arrays
+const activeFlags = [true, false, true]; // Automatically inferred as boolean[]
+
+// Modifying data safely
+userNames.push("David"); // ✅ Valid
+systemScores.push("99");  // ❌ Compile Error: Argument of type 'string' is not assignable to parameter of type 'number'.
+```
+
+### Arrays with Union Types
+If you need an array to hold more than one data type, combine arrays with Union Types using parentheses `()`.
+
+```typescript
+// An array that can hold a mix of strings AND numbers
+const mixedTimeline: (string | number)[] = [2024, "Launch", 2026, "Scale"];
+```
+
+---
+
+## 🗂️ 2. Tuples
+
+A **Tuple** is a specialized array with a **fixed length** and **pre-defined types** at specific index positions. 
+
+### The Problem
+Sometimes you want an array to represent a strict record—like a coordinate structure `[x, y]` or an HTTP response state `[statusCode, statusMessage]`. Standard arrays cannot guarantee position-based security; tuples can.
+
+### Code Example
+
+```typescript
+// Declaring a tuple: Position 0 MUST be a number, Position 1 MUST be a string
+let HttpResponse: [number, string];
+
+HttpResponse = [200, "Success"]; // ✅ Valid
+HttpResponse = ["404", "Not Found"]; // ❌ Compile Error: Type 'string' is not assignable to type 'number'.
+HttpResponse = [500, "Error", true]; // ❌ Compile Error: Source has 3 elements but target allows only 2.
+```
+
+---
+
+## 🏗️ Simple & Clear Production Example: E-Commerce Cart
+
+Here is a practical, realistic scenario: managing items inside an online shopping cart. We use an **Array** to hold multiple items, and a **Tuple** to represent the exact structural breakdown of each item (`[productId, quantity, unitPrice]`).
+
+```typescript
+// Step 1: Define a clear Tuple alias for a cart item line record
+// Format: [id: number, qty: number, tag: string]
+type CartLineItem = [number, number, string];
+
+// Step 2: Define an Array type that stores these tuple records
+type ShoppingCart = CartLineItem[];
+
+// Step 3: Create a function to process the cart data safely
+function calculateCartTotal(cart: ShoppingCart): number {
+  let totalCost = 0;
+
+  // TypeScript knows exactly what type each array index holds
+  cart.forEach((item: CartLineItem) => {
+    const quantity = item[1]; // Index 1 is always the quantity number
+    const priceString = item[2]; // Index 2 is always the price string (e.g., "$19.99")
+    
+    // Parse the price string to a float number
+    const cleanPrice = parseFloat(priceString.replace("$", ""));
+    totalCost += quantity * cleanPrice;
+  });
+
+  return totalCost;
+}
+
+// Step 4: Execute the code with structured data
+const userCart: ShoppingCart = [
+  [101, 2, "$15.00"], // Item 1: ID 101, Qty 2, Price $15.00
+  [205, 1, "$45.50"], // Item 2: ID 205, Qty 1, Price $45.50
+];
+
+const checkoutTotal = calculateCartTotal(userCart);
+console.log(`Your final checkout total is: $${checkoutTotal.toFixed(2)}`); // Output: $75.50
+```
