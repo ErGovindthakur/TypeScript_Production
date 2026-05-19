@@ -37,13 +37,13 @@ type teaRecipe = {
   milk: number;
 };
 
-// since it doesn't produce error, bcz it has no custom type
+// since it doesn't produce error, bcz it has no custom literal type
 class MasalaChai implements teaRecipe {
   water = 100;
   milk = 50;
 }
 
-type size = "small" | "large"; // since here is custom types so convert into interface
+type size = "small" | "large"; // since here is custom literal types so convert into interface
 
 // let's convert size type to interface
 interface cupSize {
@@ -53,5 +53,64 @@ interface cupSize {
 //      size="small" // no suggestions, when size is "type"
 // }
 class chaiSize implements cupSize {
-  size: "small" | "large" = "small"; // suggestions, when cupSize is "interface"
+  size: "small" | "large" = "large"; // suggestions, when cupSize is "interface"
 }
+
+
+// type Response = {ok:true} | {ok:false};
+
+interface Response {
+  res:{ok:true} | {ok:false}
+}
+class myRes implements Response{
+  res: { ok: true; } | { ok: false; } = {ok:true};
+}
+
+// exploring union "|"
+
+type TeaType = "masala" | "ginger" | "lemon";
+
+function orderChai(tea:TeaType):string{
+  tea='lemon'
+  return tea;
+}
+
+// Exploring intersection '&'
+type BaseChai = {tealeaves:number};
+type Extra = {masala:number};
+
+type MasalaChai2 = BaseChai & Extra;
+
+const cup : MasalaChai2 = {
+  tealeaves:2,
+  masala:1
+}
+
+// applying optional value
+
+type User = {
+  userName:string;
+  boi?:string
+};
+
+const u1:User = {
+  userName:"Govind"
+}
+const u2:User = {
+  userName:"Govind Thakur",
+  boi:"Software Developer"
+}
+
+// setting a readonly property
+
+type config = {
+  readonly appName:string;
+  version:number
+}
+
+const cfg : config = {
+  appName : "Get-Insights",
+  version:1
+}
+
+// cfg.appName = "ABC"; // it can't be modified
