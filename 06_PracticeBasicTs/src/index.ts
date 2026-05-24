@@ -4,7 +4,7 @@
 
 // Let's start exploring typescript from basic to advance
 
-// 1. Topic : Introduction to Javascript
+// 1. Topic : Introduction to Typescript
 
 // 1. What is Typescript ?
 // => Typescript is strongly typed programming language, built on top of javascript. It acts as a strict superpower for javascript by adding static typing.
@@ -57,3 +57,34 @@ console.log(greetUser("Govinda"));
 // => Typescript uses a structural typing system (also called duck typing).
 // => It checks the shape and properties of an object, not its declared name.
 // => Two diff classes with identical properties are treated as the same type.
+
+// 2. Topic Basic Data Types (string, number, boolean, array, tuple)
+
+// => Basic data types form the foundational building blocks of data safety in Typescript. By explicitly defining your data shapes, you prevent logic bugs before your code even runs.
+
+// -> Prevent Type Coercion : Stops accidental operations like adding a number to a boolean.
+// -> Array safety : Ensures a collections contain only uniform, predictable data.
+// -> Tuple Restrictions : Locks down arrays that require a rigid structure and fixed length.
+// -> Self-Documenting : Makes your code instantly readable without needing extra documentation comments.
+
+// code Example:
+
+// 1. Primitive Types
+let userName :string = "Ajay";
+let totalScore : number = 90.4;
+let isPremiumUser : boolean = true;
+
+// 2. Array types (Two equivalent ways to declare)
+let scores : number[] = [1,2,3];
+let fruits : Array<string> = ["Apple","Orange","Grapes"];
+
+// 3. Tuple type (Fixed length, fixed order of type)
+// let databaseRecords : [number,string, boolean] = [1,"a",true];
+let databaseRecords : [number,string, boolean];
+databaseRecords = [101,"Admin User",true];
+
+// Top 5 Interview Questions from Topic 2
+
+// Q) 1. What is the diff btw an Array and a Tuple in typescript ?
+// => An Array holds an arbitrary number of elements, usually of the same types
+// => A Tuple has a fixed number of elements with predefined types in specific order.
