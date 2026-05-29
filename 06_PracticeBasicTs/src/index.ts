@@ -121,3 +121,40 @@ const students: Student[] = [
         isPassed: true,
     },
 ];
+
+
+
+// Exploring Type alias , Union and Literal Types
+
+// 1. Type alias
+
+type Product = {
+    id:string | number; // this is union type
+    name:string;
+    price:number;
+    category:"electronics" | "fashion" | "books" // this is literal types
+};
+
+const products : Product[] = [
+    {
+        id:1,
+        name:"Apple Watch",
+        price:120000,
+        category:"electronics"
+    },
+    {
+        id:"2",
+        name:"Free Fit Jeans",
+        price:12000,
+        category:"fashion"
+    },
+    {
+        id:3,
+        name:"1 Percent Rule",
+        price:1200,
+        category:"books"
+    },
+];
+
+let filteredProducts : Product[] = products.filter((prd)=>prd.category==="books");
+console.log(filteredProducts[0]);
