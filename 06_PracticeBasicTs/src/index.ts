@@ -158,3 +158,21 @@ const products : Product[] = [
 
 let filteredProducts : Product[] = products.filter((prd)=>prd.category==="books");
 console.log(filteredProducts[0]);
+
+
+// // Explore Interface and how to extend it
+
+interface User {
+    id:string|number;
+    name:string
+} // avoid using semicolon
+
+interface Admin extends User{
+    role:"admin"
+};
+
+const admin : Admin = {
+    id:"123xvac8",
+    name:"Govind",
+    role:"admin"
+}
