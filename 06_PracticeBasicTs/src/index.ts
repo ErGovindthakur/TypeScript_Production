@@ -176,3 +176,29 @@ const admin : Admin = {
     name:"Govind",
     role:"admin"
 }
+
+// Exploring optional (?) and readonly properties in interface
+
+// interface Product{
+//     readonly id: string;
+//     name:string;
+//     price:number;
+//     description?:string
+// }
+
+
+// let products : Product[] = [
+//     {
+//        id:"123xygidr935",
+//        name:"Hp Laptop",
+//        price:65000,
+//        description:"Brand new Laptop" 
+//     },
+//     {
+//        id:"123xygiddrd12r935",
+//        name:"Mouse",
+//        price:6000,
+//     },
+// ]
+
+ // let changedId = products[0].id = "abc"; // Cannot assign to 'id' because it is a read-only property.
