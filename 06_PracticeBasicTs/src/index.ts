@@ -247,8 +247,15 @@ if (firstEmployee) {
 }
  // task 2
 
-const getHighSalaryEmp = employees.filter((emp)=>emp.salary>50000); // task 3, hey is it fine, or i have to create a separate function
-console.log(getHighSalaryEmp);
+// const getHighSalaryEmp = employees.filter((emp)=>emp.salary>50000); // task 3, hey is it fine, or i have to create a separate function
+// console.log(getHighSalaryEmp);
+
+// writing reusable function to get highest salary employee
+const getHighSalaryEmp = (emp:Employee[]):Employee[] => {
+    return emp.filter((emp)=>emp.salary>50000);
+}
+
+console.log(getHighSalaryEmp(employees));
 
 const allEmpData = employees.map((emp)=> emp.name);
 console.log(allEmpData);
