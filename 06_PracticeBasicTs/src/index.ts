@@ -88,3 +88,36 @@ databaseRecords = [101,"Admin User",true];
 // Q) 1. What is the diff btw an Array and a Tuple in typescript ?
 // => An Array holds an arbitrary number of elements, usually of the same types
 // => A Tuple has a fixed number of elements with predefined types in specific order.
+
+// Explored Oject in ts
+type Student = {
+    id: string;
+    name: string;
+    course: string;
+    marks: number;
+    isPassed: boolean;
+};
+
+const students: Student[] = [
+    {
+        id: "12xyx12",
+        name: "Gray",
+        course: "ReactJS",
+        marks: 99,
+        isPassed: true,
+    },
+    {
+        id: "12xyx34",
+        name: "Nil",
+        course: "Node.js",
+        marks: 98,
+        isPassed: true,
+    },
+    {
+        id: "12avc34",
+        name: "Guest",
+        course: "Python",
+        marks: 98,
+        isPassed: true,
+    },
+];
