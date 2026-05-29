@@ -202,3 +202,54 @@ const admin : Admin = {
 // ]
 
  // let changedId = products[0].id = "abc"; // Cannot assign to 'id' because it is a read-only property.
+
+
+ // Interface practice
+
+interface Employee{
+    readonly id:string;
+    name:string;
+    department:string;
+    salary:number
+}
+
+const employees : Employee[] = [ // task 1
+    {
+        id:"123",
+        name:"Govind",
+        department:"Software Development",
+        salary:120000
+    },
+    {
+        id:"12345",
+        name:"Golu",
+        department:"Software Development",
+        salary:10000
+    },
+    {
+        id:"12345",
+        name:"Hunda",
+        department:"Software Development",
+        salary:20000
+    }
+];
+
+const getEmployeeName = (emp:Employee):string=> {
+    return emp.name;
+};
+
+const firstEmployee = employees[0];
+
+if (firstEmployee) {
+    console.log(getEmployeeName(firstEmployee));
+} else {
+    console.log("No employee found");
+}
+ // task 2
+
+const getHighSalaryEmp = employees.filter((emp)=>emp.salary>50000); // task 3, hey is it fine, or i have to create a separate function
+console.log(getHighSalaryEmp);
+
+const allEmpData = employees.map((emp)=> emp.name);
+console.log(allEmpData);
+
