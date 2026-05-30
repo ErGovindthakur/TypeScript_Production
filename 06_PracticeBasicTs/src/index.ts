@@ -260,3 +260,48 @@ console.log(getHighSalaryEmp(employees));
 const allEmpData = employees.map((emp)=> emp.name);
 console.log(allEmpData);
 
+// Exploring Tuples in Tuples
+
+const empRecord : [empName:string, empSalary:number] = ["Govind",120000];
+console.log(empRecord); // task 1
+
+const rgbColor : [red:number, green:number, blue:number] = [223,123,212];
+console.log(rgbColor); // task 2
+
+const apiResponse : [statusCode:number, message:string] = [201,"successfully created"];
+console.log(apiResponse); // task 3
+
+
+// Exploring Enums in TS 
+
+enum PaymentStatus{ // Base task
+    Success="success",
+    Pending="pending",
+    Failed="failed"
+}
+
+const paymentStatus = PaymentStatus.Success; // task 1
+
+interface Payment{ // task 2
+    id:string,
+    amount:number;
+    status:PaymentStatus
+}
+
+const payments : Payment[] = [ // task 3
+    {
+        id:'abc123xyrd',
+        amount:2300,
+        status:PaymentStatus.Success
+    },
+    {
+        id:'abc1av23xyrd',
+        amount:2100,
+        status:PaymentStatus.Pending
+    },
+    {
+        id:'abc1arcdv23xyrd',
+        amount:1900,
+        status:PaymentStatus.Failed
+    },
+]
