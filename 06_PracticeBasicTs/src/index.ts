@@ -337,3 +337,20 @@ const displayUserId = (userId : UserId) => {
 // task 3
 console.log("USER",displayUserId("ABC-123"));
 console.log("USER",displayUserId(123));
+
+// any vs unknown
+ 
+ // task 1
+let name : any = "Govind";
+// console.log(name.toFixed(2)); // Property 'toFixed' does not exist on type 'void'.
+
+
+// task 2
+let data : unknown = "Govind";
+// console.log(data.toUpperCase()); // It's working but giving me warning "'data' is of type 'unknown'."
+
+
+// task 3
+if(typeof data === 'string'){
+    console.log(data.toUpperCase()); // works smoothly, due to type guards
+}
