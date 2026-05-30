@@ -305,3 +305,35 @@ const payments : Payment[] = [ // task 3
         status:PaymentStatus.Failed
     },
 ]
+
+// Type Narrowing (typeof)
+
+const processValue = (value:string | number) : string | number => {
+    if(typeof value === 'string'){
+        return value.toLocaleUpperCase();
+    }else{
+        return value.toFixed(2);
+    }
+}
+// task 1
+console.log(processValue("abc123"));
+console.log(Number(processValue(123)));
+
+const getLength = (value : string | string[]):number => {
+    return value.length;
+}
+// task 2
+console.log(getLength("ABC123"));
+console.log(getLength(["ABC","DEF","GHI"]));
+
+type UserId = string | number;
+const displayUserId = (userId : UserId) => {
+    if(typeof userId === 'string'){
+        return userId.toUpperCase()
+    }else{
+        return userId;
+    }
+};
+// task 3
+console.log("USER",displayUserId("ABC-123"));
+console.log("USER",displayUserId(123));
